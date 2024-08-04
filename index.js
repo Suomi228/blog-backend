@@ -1,17 +1,25 @@
 import express from "express";
+import jwt from "jsonwebtoken";
+
 
 const app = express();
 app.use(express.json());
-
+const jwtSecretKey = 'secret'
+const PORT = process.env.PORT || 8001
 app.get('/', (req, res) => {
     res.send('22321322 Hello, World!');
 
  });
 
  app.post('/auth/login', (req, res) => {
-     console.log(req.body);
-     res.send('Data Received');
+    let data = {
+        email: req.body.email,
+        password: req.body.password
+    }
+    const token = jwt.sign(data, jwtSecretKey);
+    res.json(token);
+    
  });
- app.listen(8001, (req, res) =>{
-     console.log('Server is running on port 8001');
+ app.listen(PORT, (req, res) =>{
+     console.log(`Server is running on port ${PORT}`);
  });
