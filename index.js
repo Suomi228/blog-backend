@@ -3,12 +3,13 @@ import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 import { registerValidation } from "./validations/auth.js";
 import {validationResult} from 'express-validator'
-mongoose
-.connect('mongodb+srv://Suomi228:12345@cluster0.2vrlf2s.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
-.then(()=>{console.log('DB OK')})
-.catch(err=>{console.log(err)});
+import dotenv from 'dotenv'
 
 
+
+
+dotenv.config();
+const MONG_DB = process.env.MONG_DB 
 
 const app = express();
 app.use(express.json());
@@ -32,3 +33,7 @@ app.get('/', (req, res) => {
  app.listen(PORT, (req, res) =>{
      console.log(`Server is running on port ${PORT}`);
  });
+ mongoose
+.connect(MONG_DB)
+.then(()=>{console.log('DB OK')})
+.catch(err=>{console.log(err)});
