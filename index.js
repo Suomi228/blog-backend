@@ -1,7 +1,7 @@
 import express from "express";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
-import { registerValidation } from "./validations/auth.js";
+import { registerValidation, loginValidation } from "./validations.js";
 import { validationResult } from "express-validator";
 import dotenv from "dotenv";
 import UserModel from "./models/User.js";
@@ -19,7 +19,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/auth/me", checkAuth, UserController.getMe);
-app.post("/auth/login", UserController.login);
+app.post("/auth/login", loginValidation, UserController.login);
 
 
 app.post("/auth/register", registerValidation, UserController.register);
