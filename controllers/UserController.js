@@ -2,7 +2,8 @@ import jwt from "jsonwebtoken";
 import { validationResult } from "express-validator";
 import UserModel from "../models/User.js";
 import bcrypt from "bcrypt";
-const jwtSecretKey = "secret";
+import dotenv from "dotenv";
+dotenv.config();
 export const register = async (req, res) => {
     try {
       const errors = validationResult(req);
@@ -20,7 +21,7 @@ export const register = async (req, res) => {
       });
   
       const user = await doc.save();
-      const token = jwt.sign({ _id: user._id }, jwtSecretKey, {
+      const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET_KEY, {
         expiresIn: "30d",
       });
       const { passwordHash, ...userData } = user._doc;
@@ -48,7 +49,7 @@ export const login = async (req, res) => {
       if (!isValidPassword) {
         return res.status(400).json({ message: "Неверный логин или пароль" });
       }
-      const token = jwt.sign({ _id: user._id }, jwtSecretKey, {
+      const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET_KEY, {
         expiresIn: "30d",
       });
       const { passwordHash, ...userData } = user._doc;
