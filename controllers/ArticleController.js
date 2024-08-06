@@ -28,7 +28,24 @@ export const getOne = async (req, res) => {
     res.status(500).json({ message: "Не удалось получить статью." });
   }
 };
-
+export const remove = async (req, res) => {
+    try {
+      const articleId = req.params.id;
+  
+      const article = await ArticleModel.findOneAndDelete(
+        { _id: articleId },
+      );
+  
+      if (!article) {
+        return res.status(404).json({ message: "Статья не найдена." });
+      }
+  
+      res.json('Статья удалена');
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Не удалось получить статью." });
+    }
+  };
 export const create = async (req, res) => {
   try {
     const doc = new ArticleModel({
