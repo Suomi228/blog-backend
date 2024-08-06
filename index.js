@@ -1,12 +1,8 @@
 import express from "express";
-import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 import {registerValidation,loginValidation,articleCreateValidation,} from "./validations.js";
-import { validationResult } from "express-validator";
 import handleErrors from "./utils/handleErrors.js";
 import dotenv from "dotenv";
-import UserModel from "./models/User.js";
-import bcrypt from "bcrypt";
 import checkAuth from "./utils/checkAuth.js";
 import * as UserController from "./controllers/UserController.js";
 import * as ArticleController from "./controllers/ArticleController.js";
