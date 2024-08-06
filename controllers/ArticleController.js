@@ -29,23 +29,21 @@ export const getOne = async (req, res) => {
   }
 };
 export const remove = async (req, res) => {
-    try {
-      const articleId = req.params.id;
-  
-      const article = await ArticleModel.findOneAndDelete(
-        { _id: articleId },
-      );
-  
-      if (!article) {
-        return res.status(404).json({ message: "Статья не найдена." });
-      }
-  
-      res.json('Статья удалена');
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ message: "Не удалось получить статью." });
+  try {
+    const articleId = req.params.id;
+
+    const article = await ArticleModel.findOneAndDelete({ _id: articleId });
+
+    if (!article) {
+      return res.status(404).json({ message: "Статья не найдена." });
     }
-  };
+
+    res.json("Статья удалена");
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Не удалось получить статью." });
+  }
+};
 export const create = async (req, res) => {
   try {
     const doc = new ArticleModel({
@@ -60,5 +58,24 @@ export const create = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Не удалось создать статью." });
+  }
+};
+export const update = async (req, res) => {
+  try {
+    const articleId = req.params.id;
+    await ArticleModel.updateOne({
+        
+        _id: articleId,
+      }, {
+        title: req.body.title,
+        text: req.body.text,
+        imageUrl: req.body.imageUrl,
+        tags: req.body.tags,
+      });
+      res.json("Статья изменена");
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Не удалось обновить статью." });
   }
 };

@@ -27,6 +27,7 @@ app.post("/articles", checkAuth, articleCreateValidation, ArticleController.crea
 app.get("/articles",  ArticleController.getAll);
 app.get("/articles/:id",  ArticleController.getOne);
 app.delete("/articles/:id",checkAuth,  ArticleController.remove);
+app.patch("/articles/:id",checkAuth,  ArticleController.update);
 
 app.listen(PORT, (req, res) => {
   console.log(`Server is running on port ${PORT}`);
