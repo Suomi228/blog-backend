@@ -1,4 +1,17 @@
 import ArticleModel from "../models/Article.js";
+
+export const getAll = async(req, res) =>{
+    
+   try {
+     const articles = await ArticleModel.find();
+     res.json(articles);
+   } catch (error) {
+    console.log(error);
+        res.status(500).json({ message: "Не удалось получить статьи." });
+   }
+
+};
+
 export const create = async(req, res)=>{
     try {
         
