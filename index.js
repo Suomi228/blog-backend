@@ -7,10 +7,12 @@ import checkAuth from "./utils/checkAuth.js";
 import * as UserController from "./controllers/UserController.js";
 import * as ArticleController from "./controllers/ArticleController.js";
 import multer from "multer";
+import cors from "cors"
 dotenv.config();
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 app.use(('/uploads'),express.static('uploads'))
 
 const storage = multer.diskStorage({
